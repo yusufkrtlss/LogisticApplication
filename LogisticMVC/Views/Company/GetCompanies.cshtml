@@ -1,0 +1,29 @@
+﻿@using LogisticMVC.Models.CompanyModel
+@model List<CompanyViewModel>
+
+@{
+    ViewData["Title"] = "Companies";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Companies</h2>
+
+<ul>
+    @foreach (var company in Model)
+    {
+        <li>
+            <strong>Company ID:</strong> @company.id <br />
+
+            <!-- Burada UserModels için bir döngü ekleyerek gerekirse dönüşümleri yapabilirsiniz -->
+            @* <strong>User Models:</strong>
+            <ul>
+                @foreach (var userModel in company.UserModels)
+                {
+                    <li>
+                        <strong>User Model ID:</strong> @userModel.id <br />
+                    </li>
+                }
+            </ul> *@
+        </li>
+    }
+</ul>

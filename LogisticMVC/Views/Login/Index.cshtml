@@ -1,0 +1,64 @@
+﻿@using System.Globalization;
+@using LogisticMVC.Models.LoginModels
+@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+@await Html.PartialAsync("/Views/Login/PartialHeader.cshtml")
+<body>
+
+    @await Html.PartialAsync("/Views/Login/PartialNavbar.cshtml")
+
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form asp-action="Index" asp-controller="Login">
+                <h1>@Localizer["Hakkımızda"]</h1>
+                <p>@Localizer["Kurulduğumuz ilk günden itibaren profesyonel bir anlayış sergileyip, insana yatırımın önemini iyi anlayarak bu yolda çalışmalarımızı sürdürüyoruz. Uzser Bilişim olarak en ucuz ürünü satmak yerine en kaliteli ürünü müşterilerimizin alabileceği en iyi servisle beraber uygun koşullarda kullanıma sunarız. Kazancımızın büyük bölümünü gelişme ve iyileştirmeye ayırarak bu sayede hizmet kalitemizi 1997 yılından günümüze kadar en iyi çözümleri sunmaya odaklandık."]</p>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+            <div class="dropdown">
+                <button class="dropbtn">Dil Seçimi &#9660;</button>
+                <div class="dropdown-content">
+                    <a href="/Language/ChangeLanguage?culture=tr-TR">Türkçe</a>
+                    <a href="/Language/ChangeLanguage?culture=en-US">English</a>
+                </div>
+            </div>
+            <form asp-action="Index" asp-controller="Login">
+                <h1>@Localizer["Giriş Yap"]</h1>
+                <input asp-for="FirmNumber" type="text" value="0" placeholder=@Localizer["Firma Numarası"] />
+                <input asp-for="Username" type="text" value="Administrator" placeholder=@Localizer["Kullanıcı Adı"] />
+                <input asp-for="Password" type="password" value="12345" placeholder=@Localizer["Şifre"] />
+                <a href="#">@Localizer["Şifremi Unuttum?"]</a>
+                <button type="submit" id="enter">@Localizer["Giriş Yap"]</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>@Localizer["Tekrar Hoşgeldiniz!"]</h1>
+                    <p>@Localizer["Bizimle bağlantıda kalmak için lütfen kişisel bilgilerinizle giriş yapın"]</p>
+                    <button class="ghost" id="signIn">@Localizer["Giriş Yap"]</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>@Localizer["Hoşgeldiniz!"]</h1>
+                    <p>@Localizer["Kişisel bilgilerinizi girin ve bizimle yolculuğa başlayın"]</p>
+                    <button class="ghost" id="signUp">@Localizer["Hakkımızda"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("/Views/Login/PartialScript.cshtml")
+</body>
+</html>

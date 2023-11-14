@@ -1,0 +1,136 @@
+﻿@using LogisticMVC.Resources.Views.RedirectRoot;
+@using static LogisticMVC.Models.ModuleModels.ParentAndChildViewModel;
+
+@{
+    bool isEnglish = false;
+    var languageCookie = Context.Request.Cookies[".AspNetCore.Culture"]; // "language" is the name of the cookie
+    if (languageCookie != null && languageCookie.ToLower().Contains("en-us"))
+    {
+        isEnglish = true;
+    }
+}
+
+
+<aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open" item id="sidebar">
+    <div class="mdc-drawer__header">
+        <a href="index.html" class="brand-logo">
+            <img src="~/img/Logo_img/Uzser_Logo.png" alt="logo" width="150" height="75">
+        </a>
+    </div>
+    <div class="mdc-drawer__content">
+
+        <div class="user-info">
+            <p class="name">Yusuf Kurtuluş</p>
+            <p class="email">yusuf.kurtulus@uzser.com.tr</p>
+        </div>
+
+
+        <div class="mdc-list-group">
+            <nav class="mdc-list mdc-drawer-menu">
+                @if (Model != null && Model.userModels != null)
+                {
+                    @foreach (var parent in Model.userModels)
+                    {
+                        <div class="mdc-list-item mdc-drawer-item">
+                            <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-@parent.Key.id">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+                                <p>@(isEnglish ? parent.Key.moduleNameEn : parent.Key.moduleName)</p>
+                                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                            </a>
+                            <div class="mdc-expansion-panel collapse" id="ui-sub-menu-@parent.Key.id">
+                                <nav class="mdc-list mdc-drawer-submenu">
+                                    @foreach (var child in parent.Value)
+                                    {
+                                        var redirectRoot = RedirectRoot.redirectRoots.FirstOrDefault(x => x.parentId == parent.Key.id && x.moduleId == child.id);
+                                        if (redirectRoot != null)
+                                        {
+                                            <div class="mdc-list-item mdc-drawer-item">
+                                                <a class="mdc-drawer-link" href="@redirectRoot.root" target="content-iframe">
+                                                    <p style="margin-top:10px;margin-bottom:10px;">@(isEnglish ? child.moduleNameEn : child.moduleName)</p>
+                                                </a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="mdc-list-item mdc-drawer-item">
+                                                <p>Child module not configured properly</p>
+                                            </div>
+                                        }
+                                    }
+                                </nav>
+                            </div>
+                        </div>
+                    }
+                }
+            </nav>
+        </div>
+        <div class="profile-actions">
+            <a href="javascript:;">Settings</a>
+            <span class="divider"></span>
+            <a href="javascript:;">Logout</a>
+        </div>
+    </div>
+</aside>
+
+
+@* <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="~/Logo_img/Uzser_Logo.png" alt="Logo">
+    </div>
+    <!-- SidebarSearch Form -->
+    <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-sidebar">
+                    <i class="fas fa-search fa-fw"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (Model != null && Model.userModels != null)
+    {
+        <ul>
+            @foreach (var parent in Model.userModels)
+            {
+                <li class="parent-module">
+                    @if (isEnglish)
+                    {
+
+                        <span class="module-name">
+
+                            @parent.Key.moduleNameEn
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="module-name">
+                            @parent.Key.moduleName</span>
+                    }
+                     <ul class="child-modules">
+                        @foreach (var child in parent.Value)
+                        {
+                        <li>
+                                <a href="@RedirectRoot.redirectRoots.Where(x=>x.parentId==parent.Key.id && x.moduleId==child.id).First().root" class="child-module-link" module-id="@child.id">
+                                    @if (isEnglish)
+                                    {
+                                         <p>@child.moduleNameEn</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@child.moduleName</p>
+                                    }</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    }
+    <!-- Çıkış Düğmesi -->
+    <div class="logout-container">
+        <a href="#" class="logout-link">Çıkış Yap</a>
+    </div>
+</div> *@

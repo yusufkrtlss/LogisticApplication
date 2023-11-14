@@ -1,0 +1,97 @@
+﻿@using LogisticMVC.Models.RoleModulesModels
+@model CreateRoleModuleViewModel
+
+
+@{
+    ViewData["Title"] = "Create Role Module";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- (new SelectList(Model.Companies, "id", "companyName"))-->
+<!-- (new SelectList(Model.Modules, "id", "moduleName"))-->
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<div class="container mt-4">
+    <h2>Create Role Module</h2>
+
+    @if (Model != null)
+    {
+
+        @* <form asp-action="CreateRoleModule" asp-controller="RoleModules" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="roleId" />
+
+            <div class="form-group">
+                <label asp-for="companyId">Şirket Seç:</label>
+                <select asp-for="companyId" class="form-control" id="companySelect">
+                    <option value="">-- Şirket Seç --</option>
+                    <option value="@Model.Company.Id">@Model.Company.CompanyName</option>
+                </select>
+                <span asp-validation-for="companyId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="moduleId">Model Seç:</label>
+                <select asp-for="moduleId" class="form-control" id="companySelect">
+                    <option value="">-- Model Seç --</option>
+                    <option value="@Model.Module.Id">@Model.Module.ModuleName</option>
+                </select>
+                <span asp-validation-for="moduleId" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form> *@
+
+
+        @* <form asp-action="CreateRoleModule" asp-controller="RoleModules" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="RoleId" />
+            <div class="form-group">
+                <label asp-for="CompanyId">Şirket Seç:</label>
+                <input asp-for="CompanyId" class="form-control" />
+                <span asp-validation-for="CompanyId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ModuleId">Modul Seç:</label>
+                <input asp-for="ModuleId" class="form-control" />
+                <span asp-validation-for="ModuleId" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form> *@
+
+        <form asp-action="CreateRoleModule" asp-controller="RoleModules" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label asp-for="roleId">Role ID:</label>
+                <input asp-for="roleId" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="companyId">Şirket Seç:</label>
+                <input asp-for="companyId" class="form-control" />
+                <span asp-validation-for="companyId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="moduleId">Modül Seç:</label>
+                <input asp-for="moduleId" class="form-control" />
+                <span asp-validation-for="moduleId" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Role Module</button>
+        </form>
+
+    }
+    else
+    {
+        <p>Model is null.</p>
+    }
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
